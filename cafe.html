@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Café / Thé - Café Andalous</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #E9DDCF;
+            color: #3d2c1b;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Logo + Paragraphe */
+        .logo-container {
+            text-align: center;
+            padding: 10px 20px 40px;
+            background-color: #E9DDCF;
+        }
+
+        .logo-container img {
+            width: 380px;
+            max-width: 90vw;
+            height: auto;
+            border-radius: 50%;
+            border: none;
+            animation: logoSimpleAppear 1.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes logoSimpleAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-subtitle {
+            max-width: 900px;
+            margin: 30px auto 0;
+            padding: 0 20px;
+            font-size: 1.25rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: #5F3C13;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInSubtitle 1.4s ease-out 0.8s forwards;
+        }
+
+        @keyframes fadeInSubtitle {
+            to { opacity: 0.95; }
+        }
+
+        /* Titre catégorie - petit */
+        .category-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #5F3C13;
+            margin: 20px 0 45px;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 110px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #5F3C13, transparent);
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Hero image - PLUS PETIT */
+        .hero-image-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            border: 3px solid #5F3C13;
+            box-shadow: 0 4px 12px rgba(95, 60, 19, 0.15);
+        }
+
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            background: linear-gradient(to bottom, rgba(95, 60, 19, 0.03), rgba(95, 60, 19, 0.1));
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Menu compact */
+        .cafe-menu {
+            max-width: 950px;
+            margin: 0 auto 80px;
+            padding: 0 18px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+
+        .cafe-item {
+            background: linear-gradient(145deg, #ffffff, #f0e6da);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 5px 16px rgba(95, 60, 19, 0.1);
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 0.7s ease forwards;
+            line-height: 1.2;
+        }
+
+        .cafe-item:nth-child(odd) { animation-delay: 0.15s; }
+        .cafe-item:nth-child(even) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cafe-item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #5F3C13;
+            box-shadow: 0 5px 14px rgba(95, 60, 19, 0.25);
+            flex-shrink: 0;
+        }
+
+        .cafe-details {
+            flex: 1;
+            gap: 6px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cafe-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cafe-header i {
+            font-size: 1.4rem;
+            color: #5F3C13;
+        }
+
+        .cafe-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #3d2c1b;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cafe-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #5F3C13;
+        }
+
+        /* Bouton retour */
+        .back-button-container {
+            text-align: center;
+            margin: 70px 0 90px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(to right, #5F3C13, #7a5123);
+            color: white;
+            padding: 10px 45px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(95, 60, 19, 0.3);
+            transition: all 0.4s ease;
+            letter-spacing: 1px;
+        }
+
+        .back-button:hover, .back-button:active {
+            background: linear-gradient(to right, #4a2f0f, #5F3C13);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 35px rgba(95, 60, 19, 0.4);
+        }
+
+     .site-footer {
+            background-color: #3d2c1b;
+            color: #fdfaf5;
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .footer-text {
+            font-size: 1.4rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .footer-text span {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            display: block;
+            margin-top: 12px;
+        }
+
+        .footer-phone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+        }
+
+        .footer-phone i {
+            font-size: 2rem;
+            color: #5F3C13;
+            margin-bottom: 10px;
+        }
+
+        .footer-phone strong {
+            color: #5F3C13;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .social-links a {
+            color: #fdfaf5;
+            font-size: 2.8rem;
+            transition: all 0.4s ease;
+        }
+
+        .social-links a:hover {
+            color: #5F3C13;
+            transform: scale(1.2);
+        }
+
+        .copyright {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .category-title { font-size: 2.5rem; margin: 18px 0 40px; }
+            .hero-image { height: 150px; }
+            .hero-image-container { border-width: 3px; border-radius: 14px; margin-bottom: 45px; }
+            .cafe-menu { gap: 20px; }
+            .cafe-item { padding: 12px; gap: 12px; }
+            .cafe-item-img { width: 65px; height: 65px; }
+            .cafe-name { font-size: 1.3rem; }
+            .cafe-price { font-size: 1.5rem; }
+            .logo-subtitle { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .category-title { font-size: 2.2rem; }
+            .hero-image { height: 140px; }
+            .hero-image-container { border-width: 2px; border-radius: 12px; margin-bottom: 40px; }
+            .cafe-item-img { width: 60px; height: 60px; }
+            .cafe-name { font-size: 1.25rem; }
+            .cafe-price { font-size: 1.45rem; }
+            .logo-subtitle { font-size: 1.05rem; }
+        }
+
+        @media (max-width: 360px) {
+            .category-title { font-size: 2rem; }
+            .hero-image { height: 130px; }
+            .cafe-item-img { width: 55px; height: 55px; }
+            .cafe-name { font-size: 1.2rem; }
+            .cafe-price { font-size: 1.4rem; }
+            .logo-subtitle { font-size: 1rem; }
+        }
+        @media (max-width: 430px) {
+
+  body {
+    font-size: 14px;
+  }
+
+  .logo-container img {
+    width: 260px;
+  }
+
+  .category-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .hero-image {
+    height: 120px;
+  }
+
+  .cafe-menu {
+    gap: 16px;
+  }
+
+  .cafe-item {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .cafe-item-img {
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
+  }
+
+  .cafe-name {
+    font-size: 1.05rem;
+  }
+
+  .cafe-price {
+    font-size: 1.25rem;
+  }
+
+  .back-button {
+    font-size: 1.1rem;
+    padding: 8px 30px;
+  }
+}
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <img src="image/andalons.png" alt="Café Andalous">
+        <p class="logo-subtitle">
+            Bienvenue chez Andalous, votre refuge cosy où les arômes authentiques du café et du thé se mêlent à une ambiance chaleureuse et conviviale. Détendez-vous et savourez l’instant.
+        </p>
+    </div>
+
+    <h1 class="category-title">Café / Thé</h1>
+
+    <div class="hero-image-container">
+        <img src="image/cafe et the.jpg" alt="Café et Thé" class="hero-image">
+    </div>
+
+    <div class="cafe-menu">
+
+        <!-- Café -->
+        <div class="cafe-item">
+            <img src="image/café direct.png" alt="Café Direct" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Café Direct</div>
+                </div>
+                <div class="cafe-price">9 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/express.png" alt="Express" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Express</div>
+                </div>
+                <div class="cafe-price">7 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/capusin.png" alt="Capucin" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Capucin</div>
+                </div>
+                <div class="cafe-price">8 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/americain.png" alt="Café Américain" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Café Américain</div>
+                </div>
+                <div class="cafe-price">9 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/chocolat au lais.png" alt="Chocolat au Lait" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Chocolat au Lait</div>
+                </div>
+                <div class="cafe-price">9 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/chocolat chaud.png" alt="Chocolat Chaud" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Chocolat Chaud</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/café illy.png" alt="Café Illy" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Café Illy</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/café capsule .png" alt="Café Capsule" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Café Capsule</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/café turc.png" alt="Café Turc" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Café Turc</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <!-- Thé -->
+        <h1 class="category-title">Thé</h1>
+
+        <div class="cafe-item">
+            <img src="image/menthe.png" alt="Thé Menthe" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Thé Menthe</div>
+                </div>
+                <div class="cafe-price">8 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/the amandes.png" alt="Thé aux Amandes" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Thé aux Amandes</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/the pighnons.png" alt="Thé aux Pignons" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Thé aux Pignons</div>
+                </div>
+                <div class="cafe-price">12 DT</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="back-button-container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            <span>Retour au Menu</span>
+        </a>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                Merci pour votre fidélité<br>
+                <span>Une expérience unique alliant saveurs authentiques et ambiance chaleureuse</span>
+            </div>
+            <div class="footer-phone">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                    <strong>54 800 666</strong>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100063944715824" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/cafe__andalous/" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            <div class="copyright">
+                © Café Andalous Musée du Bardo
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
